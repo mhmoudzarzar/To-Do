@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>To-Do App</title>
 <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #f0f2f5;
@@ -15,141 +19,277 @@
         min-height: 100vh;
         font-size: 16px;
         color: #333;
+        padding: 20px 0;
     }
     header {
-        background-color: #4CAF50;
+        background-color: #4caf50;
         color: #fff;
         width: 100%;
         padding: 20px 0;
         text-align: center;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        user-select: none;
     }
-    header h1 { font-size: 2rem; letter-spacing: 1px; }
+    header h1 {
+        font-size: 2.2rem;
+        letter-spacing: 1.2px;
+    }
     nav {
         margin-top: 15px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 10px;
+        gap: 12px;
+        width: 100%;
+        max-width: 600px;
     }
     nav button {
-        padding: 8px 18px;
+        padding: 10px 22px;
         border: none;
         border-radius: 25px;
-        background-color: #4CAF50;
+        background-color: #4caf50;
         color: white;
         font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        flex: 1 1 auto;
+        max-width: 150px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        user-select: none;
     }
-    nav button:hover { background-color: #45a049; transform: scale(1.05); }
-    main { margin-top: 25px; width: 90%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
-
-    /* شريط النسبة */
+    nav button:hover,
+    nav button.active {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+    main {
+        margin-top: 25px;
+        width: 90%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+    /* Progress Bar */
     #progressContainer {
-        width: 100%; margin-bottom: 15px;
+        width: 100%;
+        margin-bottom: 15px;
     }
-    #progressContainer label { font-weight: 600; }
+    #progressContainer label {
+        font-weight: 700;
+        font-size: 1rem;
+        display: block;
+        margin-bottom: 6px;
+        color: #444;
+    }
     #progressBarBackground {
-        background-color: #ddd; border-radius: 20px; overflow: hidden; height: 20px; margin-top: 5px;
+        background-color: #ddd;
+        border-radius: 20px;
+        overflow: hidden;
+        height: 24px;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
     #progressBar {
-        height: 100%; width: 0%; background-color: #4CAF50; text-align: center;
-        color:white; line-height: 20px; font-size:0.8rem; transition: width 0.3s;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #4caf50, #66bb6a);
+        text-align: center;
+        color: white;
+        line-height: 24px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: width 0.4s ease;
+        user-select: none;
     }
-
-    .task-input-container { display: flex; gap: 10px; flex-wrap: wrap; }
+    .task-input-container {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
     input[type="text"] {
         flex: 1 1 60%;
-        padding: 12px 15px;
-        border: 1px solid #ccc;
+        padding: 14px 18px;
+        border: 1.5px solid #ccc;
         border-radius: 25px;
-        font-size: 1rem;
-        transition: border-color 0.3s;
+        font-size: 1.1rem;
+        transition: border-color 0.3s ease;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
     }
-    input[type="text"]:focus { outline: none; border-color: #4CAF50; }
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 8px rgba(76,175,80,0.6);
+    }
     button.add {
         flex: 1 1 30%;
-        padding: 12px 20px;
+        padding: 14px 20px;
         border-radius: 25px;
-        background-color: #4CAF50;
+        background-color: #4caf50;
         color: white;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        user-select: none;
     }
-    button.add:hover { background-color: #45a049; transform: scale(1.05); }
-
-    ul { list-style-type: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    button.add:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
     li {
         background-color: #fff;
-        padding: 15px 20px;
+        padding: 18px 22px;
         border-radius: 15px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.08);
         cursor: grab;
-        transition: background-color 0.3s, transform 0.2s;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        user-select: none;
     }
-    li:hover { transform: translateY(-2px); }
-    li span { font-size: 1rem; flex: 1 1 auto; word-break: break-word; }
-    .buttondiv { display: flex; gap: 8px; flex-wrap: wrap; }
+    li:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+    }
+    li span {
+        font-size: 1.1rem;
+        flex: 1 1 auto;
+        word-break: break-word;
+        color: #222;
+    }
+    .buttondiv {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-left: 15px;
+    }
     .buttondiv button {
-        padding: 6px 12px;
+        padding: 7px 14px;
         border-radius: 20px;
         border: none;
         cursor: pointer;
-        font-size: 0.9rem;
-        transition: background-color 0.3s, transform 0.2s;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        user-select: none;
     }
-    .buttondiv button:hover { transform: scale(1.05); }
-    .buttondiv button:nth-child(1) { background-color: #28a745; color: white; }
-    .buttondiv button:nth-child(1):hover { background-color: #218838; }
-    .buttondiv button:nth-child(2) { background-color: #ffc107; color: #212529; }
-    .buttondiv button:nth-child(2):hover { background-color: #e0a800; }
-    .buttondiv button:nth-child(3) { background-color: #dc3545; color: white; }
-    .buttondiv button:nth-child(3):hover { background-color: #c82333; }
-
-    li.completed { text-decoration: line-through; background-color: #d4edda; color: #155724; font-style: italic; opacity: 0.7; }
-    .task-time { font-size:0.8rem; color:#555; margin-top:5px; }
-
-    footer { margin-top: auto; padding: 15px 0; width: 100%; text-align: center; background-color: #4CAF50; color: white; box-shadow: 0 -2px 5px rgba(0,0,0,0.1); }
-
+    .buttondiv button:hover {
+        transform: scale(1.1);
+    }
+    .buttondiv button.complete-btn {
+        background-color: #28a745;
+        color: white;
+    }
+    .buttondiv button.complete-btn:hover {
+        background-color: #218838;
+    }
+    .buttondiv button.edit-btn {
+        background-color: #ffc107;
+        color: #212529;
+    }
+    .buttondiv button.edit-btn:hover {
+        background-color: #e0a800;
+    }
+    .buttondiv button.delete-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+    .buttondiv button.delete-btn:hover {
+        background-color: #c82333;
+    }
+    li.completed {
+        text-decoration: line-through;
+        background-color: #d4edda;
+        color: #155724;
+        font-style: italic;
+        opacity: 0.75;
+        cursor: default;
+    }
+    li.completed:hover {
+        transform: none;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+    .task-time {
+        font-size: 0.85rem;
+        color: #555;
+        margin-top: 6px;
+        width: 100%;
+        user-select: text;
+    }
+    footer {
+        margin-top: auto;
+        padding: 18px 0;
+        width: 100%;
+        text-align: center;
+        background-color: #4caf50;
+        color: white;
+        box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        user-select: none;
+        font-weight: 600;
+        font-size: 1rem;
+    }
     @media (max-width: 480px) {
-        body { font-size: 14px; }
-        nav button { flex: 1 1 100%; }
-        .task-input-container { flex-direction: column; }
-        input[type="text"], button.add { flex: 1 1 100%; }
-        li { flex-direction: column; align-items: flex-start; }
-        .buttondiv { width: 100%; justify-content: flex-start; margin-top: 10px; }
+        body {
+            font-size: 14px;
+            padding: 15px 0;
+        }
+        nav button {
+            flex: 1 1 100%;
+            max-width: none;
+        }
+        .task-input-container {
+            flex-direction: column;
+        }
+        input[type="text"],
+        button.add {
+            flex: 1 1 100%;
+        }
+        li {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 15px 18px;
+        }
+        .buttondiv {
+            width: 100%;
+            justify-content: flex-start;
+            margin-top: 12px;
+        }
     }
 </style>
 </head>
 <body>
 <header><h1>To-Do App</h1></header>
 <nav>
-    <button id="allBtn">All Tasks</button>
+    <button id="allBtn" class="active">All Tasks</button>
     <button id="activeBtn">Active Tasks</button>
     <button id="completedBtn">Completed Tasks</button>
 </nav>
 
 <main>
     <!-- Progress Bar -->
-    <div id="progressContainer">
+    <div id="progressContainer" aria-label="Task completion progress">
         <label for="progressBar">Progress:</label>
-        <div id="progressBarBackground">
+        <div id="progressBarBackground" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
             <div id="progressBar">0%</div>
         </div>
     </div>
 
     <section>
         <div class="task-input-container">
-            <input type="text" id="taskInput" placeholder="Enter a new task">
-            <button class="add" id="addTaskButton">Add Task</button>
+            <input type="text" id="taskInput" placeholder="Enter a new task" aria-label="New task input" />
+            <button class="add" id="addTaskButton" aria-label="Add new task">Add Task</button>
         </div>
-        <ul id="taskList"></ul>
+        <ul id="taskList" aria-live="polite" aria-relevant="additions removals"></ul>
     </section>
 </main>
 
@@ -163,23 +303,26 @@ const allBtn = document.getElementById('allBtn');
 const activeBtn = document.getElementById('activeBtn');
 const completedBtn = document.getElementById('completedBtn');
 const progressBar = document.getElementById('progressBar');
+const progressBarBackground = document.getElementById('progressBarBackground');
 
 class Task {
-    constructor(name, id=null, completed=false, createdAt=null, completedAt=null){
+    constructor(name, id = null, completed = false, createdAt = null, completedAt = null) {
         this.name = name;
-        this.id = id || Math.floor(Math.random()*10000);
+        this.id = id || Date.now() + Math.floor(Math.random() * 1000);
         this.completed = completed;
         this.createdAt = createdAt || new Date().toLocaleString();
         this.completedAt = completedAt || null;
     }
 
-    createTask(){
+    createTask() {
         const taskItem = document.createElement('li');
         taskItem.id = this.id;
         taskItem.draggable = true;
+        taskItem.setAttribute('aria-label', this.completed ? `Completed task: ${this.name}` : `Active task: ${this.name}`);
 
         const taskTextSpan = document.createElement('span');
         taskTextSpan.textContent = this.name;
+        taskTextSpan.setAttribute('tabindex', '0');
         taskItem.appendChild(taskTextSpan);
 
         const timeSpan = document.createElement('div');
@@ -192,16 +335,20 @@ class Task {
 
         const completeButton = document.createElement('button');
         completeButton.textContent = this.completed ? 'Undo' : 'Complete';
+        completeButton.className = 'complete-btn';
+        completeButton.setAttribute('aria-pressed', this.completed);
         completeButton.addEventListener('click', () => this.toggleComplete(taskItem, completeButton, timeSpan));
         buttonDiv.appendChild(completeButton);
 
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
+        editButton.className = 'edit-btn';
         editButton.addEventListener('click', () => this.edit(taskTextSpan));
         buttonDiv.appendChild(editButton);
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
+        deleteButton.className = 'delete-btn';
         deleteButton.addEventListener('click', () => this.delete(taskItem));
         buttonDiv.appendChild(deleteButton);
 
@@ -211,23 +358,29 @@ class Task {
         updateProgress();
     }
 
-    toggleComplete(taskItem, button, timeSpan){
+    toggleComplete(taskItem, button, timeSpan) {
         this.completed = !this.completed;
-        if(this.completed) this.completedAt = new Date().toLocaleString();
+        if (this.completed) this.completedAt = new Date().toLocaleString();
         else this.completedAt = null;
         button.textContent = this.completed ? 'Undo' : 'Complete';
+        button.setAttribute('aria-pressed', this.completed);
         timeSpan.textContent = `Created: ${this.createdAt}` + (this.completedAt ? ` | Completed: ${this.completedAt}` : '');
         this.updateTaskStyle(taskItem);
         saveToLocalStorage();
         updateProgress();
     }
 
-    updateTaskStyle(taskItem){
-        if(this.completed) taskItem.classList.add('completed');
-        else taskItem.classList.remove('completed');
+    updateTaskStyle(taskItem) {
+        if (this.completed) {
+            taskItem.classList.add('completed');
+            taskItem.setAttribute('aria-label', `Completed task: ${this.name}`);
+        } else {
+            taskItem.classList.remove('completed');
+            taskItem.setAttribute('aria-label', `Active task: ${this.name}`);
+        }
     }
 
-    delete(taskItem){
+    delete(taskItem) {
         taskItem.remove();
         let taskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
         taskArray = taskArray.filter(t => t.id !== this.id);
@@ -235,17 +388,20 @@ class Task {
         updateProgress();
     }
 
-    edit(taskTextSpan){
+    edit(taskTextSpan) {
         const newName = prompt("Edit task name:", this.name);
-        if(!newName || /^[0-9]+$/.test(newName)) { alert('Please enter a valid task.'); return; }
-        this.name = newName;
-        taskTextSpan.textContent = newName;
+        if (!newName || /^[0-9]+$/.test(newName.trim())) {
+            alert('Please enter a valid task.');
+            return;
+        }
+        this.name = newName.trim();
+        taskTextSpan.textContent = this.name;
         saveToLocalStorage();
     }
 }
 
 // حفظ وترتيب المهام في localStorage
-function saveToLocalStorage(){
+function saveToLocalStorage() {
     const items = taskList.querySelectorAll('li');
     const taskArray = [];
     items.forEach(li => {
@@ -263,13 +419,19 @@ function saveToLocalStorage(){
 }
 
 // تحديث شريط النسبة
-function updateProgress(){
+function updateProgress() {
     const taskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
-    if(taskArray.length === 0){ progressBar.style.width='0%'; progressBar.textContent='0%'; return; }
+    if (taskArray.length === 0) {
+        progressBar.style.width = '0%';
+        progressBar.textContent = '0%';
+        progressBarBackground.setAttribute('aria-valuenow', 0);
+        return;
+    }
     const completedCount = taskArray.filter(t => t.completed).length;
-    const percent = Math.round((completedCount / taskArray.length)*100);
+    const percent = Math.round((completedCount / taskArray.length) * 100);
     progressBar.style.width = percent + '%';
     progressBar.textContent = percent + '%';
+    progressBarBackground.setAttribute('aria-valuenow', percent);
 }
 
 // تحميل المهام عند الصفحة
@@ -285,28 +447,43 @@ window.addEventListener('load', () => {
 // إضافة مهمة جديدة
 addTaskButton.addEventListener('click', () => {
     const text = taskInput.value.trim();
-    if(!text || /^[0-9]+$/.test(text)){ alert('Please enter a valid task.'); return; }
+    if (!text || /^[0-9]+$/.test(text)) {
+        alert('Please enter a valid task.');
+        return;
+    }
     const task = new Task(text);
     task.createTask();
     taskInput.value = '';
     saveToLocalStorage();
 });
 
-// أزرار الفلتر
+// دعم إضافة المهمة بالضغط على Enter
+taskInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        addTaskButton.click();
+    }
+});
+
+// أزرار الفلتر مع تفعيل الزر المحدد بصرياً
 allBtn.addEventListener('click', () => filterTasks('all'));
 activeBtn.addEventListener('click', () => filterTasks('active'));
 completedBtn.addEventListener('click', () => filterTasks('completed'));
 
-function filterTasks(type){
+function filterTasks(type) {
     const items = taskList.querySelectorAll('li');
-    items.forEach(li=>{
+    items.forEach(li => {
         const taskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
-        const taskData = taskArray.find(t=>t.id == li.id);
-        if(!taskData) return;
-        if(type==='all') li.style.display='flex';
-        else if(type==='active') li.style.display=taskData.completed?'none':'flex';
-        else if(type==='completed') li.style.display=taskData.completed?'flex':'none';
+        const taskData = taskArray.find(t => t.id == li.id);
+        if (!taskData) return;
+        if (type === 'all') li.style.display = 'flex';
+        else if (type === 'active') li.style.display = taskData.completed ? 'none' : 'flex';
+        else if (type === 'completed') li.style.display = taskData.completed ? 'flex' : 'none';
     });
+    // تحديث حالة الأزرار
+    [allBtn, activeBtn, completedBtn].forEach(btn => btn.classList.remove('active'));
+    if (type === 'all') allBtn.classList.add('active');
+    else if (type === 'active') activeBtn.classList.add('active');
+    else if (type === 'completed') completedBtn.classList.add('active');
 }
 </script>
 </body>
