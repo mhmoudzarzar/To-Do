@@ -131,6 +131,7 @@
         transition: background-color 0.3s ease, transform 0.2s ease;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         user-select: none;
+        max-width: 150px;
     }
     button.add:hover {
         background-color: #45a049;
@@ -182,6 +183,7 @@
         transition: background-color 0.3s ease, transform 0.2s ease;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         user-select: none;
+        white-space: nowrap;
     }
     .buttondiv button:hover {
         transform: scale(1.1);
@@ -238,6 +240,8 @@
         font-weight: 600;
         font-size: 1rem;
     }
+
+    /* شاشات صغيرة جدا (موبايل) */
     @media (max-width: 480px) {
         body {
             font-size: 14px;
@@ -253,6 +257,7 @@
         input[type="text"],
         button.add {
             flex: 1 1 100%;
+            max-width: none;
         }
         li {
             flex-direction: column;
@@ -263,6 +268,63 @@
             width: 100%;
             justify-content: flex-start;
             margin-top: 12px;
+        }
+    }
+
+    /* شاشات متوسطة (تابلت) */
+    @media (min-width: 481px) and (max-width: 768px) {
+        body {
+            font-size: 15px;
+        }
+        nav button {
+            max-width: 140px;
+        }
+        .task-input-container {
+            flex-wrap: nowrap;
+        }
+        input[type="text"] {
+            flex: 1 1 70%;
+            font-size: 1rem;
+        }
+        button.add {
+            flex: 1 1 28%;
+            max-width: 140px;
+            font-size: 1rem;
+        }
+        li {
+            padding: 16px 20px;
+        }
+        li span {
+            font-size: 1rem;
+        }
+        .buttondiv button {
+            font-size: 0.9rem;
+            padding: 6px 12px;
+        }
+    }
+
+    /* شاشات كبيرة (ديسكتوب) */
+    @media (min-width: 769px) {
+        body {
+            font-size: 16px;
+        }
+        nav button {
+            max-width: 150px;
+        }
+        .task-input-container {
+            flex-wrap: nowrap;
+        }
+        input[type="text"] {
+            font-size: 1.1rem;
+        }
+        button.add {
+            font-size: 1.1rem;
+        }
+        li span {
+            font-size: 1.1rem;
+        }
+        .buttondiv button {
+            font-size: 0.95rem;
         }
     }
 </style>
@@ -485,6 +547,3 @@ function filterTasks(type) {
     else if (type === 'active') activeBtn.classList.add('active');
     else if (type === 'completed') completedBtn.classList.add('active');
 }
-</script>
-</body>
-</html>
