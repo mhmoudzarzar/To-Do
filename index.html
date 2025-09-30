@@ -1,549 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>To-Do App</title>
-<style>
-    * {
-        box-sizing: border-box;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App</title>
+    <style>
+      * {
         margin: 0;
         padding: 0;
-    }
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f0f2f5;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        font-size: 16px;
-        color: #333;
-        padding: 20px 0;
-    }
-    header {
+        box-sizing: border-box;
+        text-transform: capitalize;
+      }
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      header {
         background-color: #4caf50;
-        color: #fff;
+        color: white;
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 90;
         width: 100%;
-        padding: 20px 0;
         text-align: center;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        user-select: none;
-    }
-    header h1 {
-        font-size: 2.2rem;
-        letter-spacing: 1.2px;
-    }
-    nav {
-        margin-top: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 12px;
+      }
+      main {
         width: 100%;
-        max-width: 600px;
-    }
-    nav button {
-        padding: 10px 22px;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+      }
+      button {
         border: none;
-        border-radius: 25px;
         background-color: #4caf50;
         color: white;
-        font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        flex: 1 1 auto;
-        max-width: 150px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        user-select: none;
-    }
-    nav button:hover,
-    nav button.active {
+      }
+      button:hover {
         background-color: #45a049;
-        transform: scale(1.05);
-    }
-    main {
-        margin-top: 25px;
-        width: 90%;
-        max-width: 600px;
-        display: flex;
-        flex-direction: column;
-        gap: 25px;
-    }
-    /* Progress Bar */
-    #progressContainer {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-    #progressContainer label {
-        font-weight: 700;
-        font-size: 1rem;
-        display: block;
-        margin-bottom: 6px;
-        color: #444;
-    }
-    #progressBarBackground {
-        background-color: #ddd;
-        border-radius: 20px;
-        overflow: hidden;
-        height: 24px;
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    }
-    #progressBar {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #4caf50, #66bb6a);
-        text-align: center;
-        color: white;
-        line-height: 24px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        transition: width 0.4s ease;
-        user-select: none;
-    }
-    .task-input-container {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-    }
-    input[type="text"] {
-        flex: 1 1 60%;
-        padding: 14px 18px;
-        border: 1.5px solid #ccc;
-        border-radius: 25px;
-        font-size: 1.1rem;
-        transition: border-color 0.3s ease;
-        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-    }
-    input[type="text"]:focus {
-        outline: none;
-        border-color: #4caf50;
-        box-shadow: 0 0 8px rgba(76,175,80,0.6);
-    }
-    button.add {
-        flex: 1 1 30%;
-        padding: 14px 20px;
-        border-radius: 25px;
-        background-color: #4caf50;
-        color: white;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        user-select: none;
-        max-width: 150px;
-    }
-    button.add:hover {
-        background-color: #45a049;
-        transform: scale(1.05);
-    }
-    ul {
+      }
+      ul {
         list-style-type: none;
         padding: 0;
+      }
+
+    
+      .taskSection {
+        width: 80%;
+        background-color: teal;
+        border-radius: 1rem;
+        max-height: 80vh;
+        min-height: 50vh;
+        overflow-y: auto;
+        padding-bottom: 1rem;
+      }
+      .inputSection {
+        width: 100%;
+        padding: 1rem;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        background-color: teal;
+        z-index: 1;
+      }
+      .inputContainer {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem;
+      }
+      .inputSection label {
+        color: white;
+        font-weight: bold;
+        align-self: center;
+        font-size: 1.2rem;
+        display: block;
+      }
+      .inputSection input {
+        width: 70%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .inputSection button {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+      #taskList {
+        margin-top: 2rem;
         display: flex;
         flex-direction: column;
-        gap: 14px;
-    }
-    li {
-        background-color: #fff;
-        padding: 18px 22px;
-        border-radius: 15px;
+        align-items: center;
+        width: 100%;
+      }
+      li {
+        width: 90%;
+        padding: 1rem;
+        border-bottom: 1px solid #ccc;
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-        cursor: grab;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        user-select: none;
-    }
-    li:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.12);
-    }
-    li span {
-        font-size: 1.1rem;
-        flex: 1 1 auto;
-        word-break: break-word;
-        color: #222;
-    }
-    .buttondiv {
-        display: flex;
-        gap: 10px;
+        gap: 1rem;
+        background-color: #f9f9f9;
+        margin-bottom: 0.5rem;
+        border-radius: 0.5rem;
         flex-wrap: wrap;
-        margin-left: 15px;
-    }
-    .buttondiv button {
-        padding: 7px 14px;
-        border-radius: 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        user-select: none;
-        white-space: nowrap;
-    }
-    .buttondiv button:hover {
-        transform: scale(1.1);
-    }
-    .buttondiv button.complete-btn {
-        background-color: #28a745;
-        color: white;
-    }
-    .buttondiv button.complete-btn:hover {
-        background-color: #218838;
-    }
-    .buttondiv button.edit-btn {
-        background-color: #ffc107;
-        color: #212529;
-    }
-    .buttondiv button.edit-btn:hover {
-        background-color: #e0a800;
-    }
-    .buttondiv button.delete-btn {
-        background-color: #dc3545;
-        color: white;
-    }
-    .buttondiv button.delete-btn:hover {
-        background-color: #c82333;
-    }
-    li.completed {
-        text-decoration: line-through;
-        background-color: #d4edda;
-        color: #155724;
-        font-style: italic;
-        opacity: 0.75;
-        cursor: default;
-    }
-    li.completed:hover {
-        transform: none;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-    }
-    .task-time {
-        font-size: 0.85rem;
-        color: #555;
-        margin-top: 6px;
-        width: 100%;
-        user-select: text;
-    }
-    footer {
-        margin-top: auto;
-        padding: 18px 0;
-        width: 100%;
+      }
+      .buttonDiv {
+        display: flex;
+        gap: 0.5rem;
+      }
+      .buttonDiv button {
+        padding: 0.3rem 0.6rem;
+        border-radius: 0.4rem;
+        font-size: 0.9rem;
+      }
+      .dateSpan {
+        font-size: 0.8rem;
+        color: gray;
+        margin-left: 1rem;
+      }
+      progress {
+        width: 90%;
+        margin: 1rem auto;
+        display: block;
+      }
+      #progressLabel {
         text-align: center;
-        background-color: #4caf50;
         color: white;
-        box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-        user-select: none;
-        font-weight: 600;
-        font-size: 1rem;
-    }
-
-    /* شاشات صغيرة جدا (موبايل) */
-    @media (max-width: 480px) {
-        body {
-            font-size: 14px;
-            padding: 15px 0;
-        }
-        nav button {
-            flex: 1 1 100%;
-            max-width: none;
-        }
-        .task-input-container {
-            flex-direction: column;
-        }
-        input[type="text"],
-        button.add {
-            flex: 1 1 100%;
-            max-width: none;
-        }
-        li {
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 15px 18px;
-        }
-        .buttondiv {
-            width: 100%;
-            justify-content: flex-start;
-            margin-top: 12px;
-        }
-    }
-
-    /* شاشات متوسطة (تابلت) */
-    @media (min-width: 481px) and (max-width: 768px) {
-        body {
-            font-size: 15px;
-        }
-        nav button {
-            max-width: 140px;
-        }
-        .task-input-container {
-            flex-wrap: nowrap;
-        }
-        input[type="text"] {
-            flex: 1 1 70%;
-            font-size: 1rem;
-        }
-        button.add {
-            flex: 1 1 28%;
-            max-width: 140px;
-            font-size: 1rem;
-        }
-        li {
-            padding: 16px 20px;
-        }
-        li span {
-            font-size: 1rem;
-        }
-        .buttondiv button {
-            font-size: 0.9rem;
-            padding: 6px 12px;
-        }
-    }
-
-    /* شاشات كبيرة (ديسكتوب) */
-    @media (min-width: 769px) {
-        body {
-            font-size: 16px;
-        }
-        nav button {
-            max-width: 150px;
-        }
-        .task-input-container {
-            flex-wrap: nowrap;
-        }
-        input[type="text"] {
-            font-size: 1.1rem;
-        }
-        button.add {
-            font-size: 1.1rem;
-        }
-        li span {
-            font-size: 1.1rem;
-        }
-        .buttondiv button {
-            font-size: 0.95rem;
-        }
-    }
-</style>
-</head>
-<body>
-<header><h1>To-Do App</h1></header>
-<nav>
-    <button id="allBtn" class="active">All Tasks</button>
-    <button id="activeBtn">Active Tasks</button>
-    <button id="completedBtn">Completed Tasks</button>
-</nav>
-
-<main>
-    <!-- Progress Bar -->
-    <div id="progressContainer" aria-label="Task completion progress">
-        <label for="progressBar">Progress:</label>
-        <div id="progressBarBackground" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-            <div id="progressBar">0%</div>
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header><h1>To-Do</h1></header>
+    <main>
+      <section class="taskSection">
+        <div class="inputSection">
+          <label for="taskInput">New Task:</label>
+          <div class="inputContainer">
+            <input type="text" id="taskInput" placeholder="Enter a new task" />
+            <button id="addTaskButton">Add Task</button>
+          </div>
         </div>
-    </div>
-
-    <section>
-        <div class="task-input-container">
-            <input type="text" id="taskInput" placeholder="Enter a new task" aria-label="New task input" />
-            <button class="add" id="addTaskButton" aria-label="Add new task">Add Task</button>
+        <div>
+          <p id="progressLabel">0% Completed</p>
+          <progress id="progressBar" value="0" max="100"></progress>
+          <ul id="taskList"></ul>
         </div>
-        <ul id="taskList" aria-live="polite" aria-relevant="additions removals"></ul>
-    </section>
-</main>
+      </section>
+      
+    </main>
+    <script>
+      const taskInput = document.getElementById("taskInput");
+      const addTaskButton = document.getElementById("addTaskButton");
+      const taskList = document.getElementById("taskList");
+      const progressBar = document.getElementById("progressBar");
+      const progressLabel = document.getElementById("progressLabel");
 
-<footer>&copy; 2024 To-Do App</footer>
-
-<script>
-const taskInput = document.getElementById('taskInput');
-const addTaskButton = document.getElementById('addTaskButton');
-const taskList = document.getElementById('taskList');
-const allBtn = document.getElementById('allBtn');
-const activeBtn = document.getElementById('activeBtn');
-const completedBtn = document.getElementById('completedBtn');
-const progressBar = document.getElementById('progressBar');
-const progressBarBackground = document.getElementById('progressBarBackground');
-
-class Task {
-    constructor(name, id = null, completed = false, createdAt = null, completedAt = null) {
-        this.name = name;
-        this.id = id || Date.now() + Math.floor(Math.random() * 1000);
-        this.completed = completed;
-        this.createdAt = createdAt || new Date().toLocaleString();
-        this.completedAt = completedAt || null;
-    }
-
-    createTask() {
-        const taskItem = document.createElement('li');
-        taskItem.id = this.id;
-        taskItem.draggable = true;
-        taskItem.setAttribute('aria-label', this.completed ? `Completed task: ${this.name}` : `Active task: ${this.name}`);
-
-        const taskTextSpan = document.createElement('span');
-        taskTextSpan.textContent = this.name;
-        taskTextSpan.setAttribute('tabindex', '0');
-        taskItem.appendChild(taskTextSpan);
-
-        const timeSpan = document.createElement('div');
-        timeSpan.className = 'task-time';
-        timeSpan.textContent = `Created: ${this.createdAt}` + (this.completedAt ? ` | Completed: ${this.completedAt}` : '');
-        taskItem.appendChild(timeSpan);
-
-        const buttonDiv = document.createElement('div');
-        buttonDiv.className = 'buttondiv';
-
-        const completeButton = document.createElement('button');
-        completeButton.textContent = this.completed ? 'Undo' : 'Complete';
-        completeButton.className = 'complete-btn';
-        completeButton.setAttribute('aria-pressed', this.completed);
-        completeButton.addEventListener('click', () => this.toggleComplete(taskItem, completeButton, timeSpan));
-        buttonDiv.appendChild(completeButton);
-
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.className = 'edit-btn';
-        editButton.addEventListener('click', () => this.edit(taskTextSpan));
-        buttonDiv.appendChild(editButton);
-
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.className = 'delete-btn';
-        deleteButton.addEventListener('click', () => this.delete(taskItem));
-        buttonDiv.appendChild(deleteButton);
-
-        taskItem.appendChild(buttonDiv);
-        this.updateTaskStyle(taskItem);
-        taskList.appendChild(taskItem);
-        updateProgress();
-    }
-
-    toggleComplete(taskItem, button, timeSpan) {
-        this.completed = !this.completed;
-        if (this.completed) this.completedAt = new Date().toLocaleString();
-        else this.completedAt = null;
-        button.textContent = this.completed ? 'Undo' : 'Complete';
-        button.setAttribute('aria-pressed', this.completed);
-        timeSpan.textContent = `Created: ${this.createdAt}` + (this.completedAt ? ` | Completed: ${this.completedAt}` : '');
-        this.updateTaskStyle(taskItem);
-        saveToLocalStorage();
-        updateProgress();
-    }
-
-    updateTaskStyle(taskItem) {
-        if (this.completed) {
-            taskItem.classList.add('completed');
-            taskItem.setAttribute('aria-label', `Completed task: ${this.name}`);
-        } else {
-            taskItem.classList.remove('completed');
-            taskItem.setAttribute('aria-label', `Active task: ${this.name}`);
+      class Task {
+        constructor(name, id = null) {
+          this.name = name;
+          this.id = id || Math.floor(Math.random() * 10000);
+          this.dayCreated = new Date();
+          this.completed = false;
         }
-    }
 
-    delete(taskItem) {
-        taskItem.remove();
-        let taskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
-        taskArray = taskArray.filter(t => t.id !== this.id);
-        localStorage.setItem('taskArray', JSON.stringify(taskArray));
-        updateProgress();
-    }
+        createTask() {
+          const taskItem = document.createElement("li");
+          taskItem.id = this.id;
 
-    edit(taskTextSpan) {
-        const newName = prompt("Edit task name:", this.name);
-        if (!newName || /^[0-9]+$/.test(newName.trim())) {
-            alert('Please enter a valid task.');
+          const taskTextSpan = document.createElement("span");
+          taskTextSpan.textContent = this.name;
+          taskItem.appendChild(taskTextSpan);
+
+          const dateSpan = document.createElement("span");
+          dateSpan.className = "dateSpan";
+          dateSpan.textContent = `Created on: ${this.dayCreated.toLocaleDateString()} ${this.dayCreated.toLocaleTimeString()}`;
+
+          const completeButton = document.createElement("button");
+          completeButton.textContent = "Complete";
+          completeButton.addEventListener("click", () =>
+            this.complete(taskItem)
+          );
+
+          const editButton = document.createElement("button");
+          editButton.textContent = "Edit";
+          editButton.addEventListener("click", () => this.edit(taskTextSpan));
+
+          const deleteButton = document.createElement("button");
+          deleteButton.textContent = "Delete";
+          deleteButton.addEventListener("click", () => this.delete(taskItem));
+
+          const undoButton = document.createElement("button");
+          undoButton.textContent = "Undo";
+          undoButton.addEventListener("click", () => this.undo(taskItem));
+
+          const buttonDiv = document.createElement("div");
+          buttonDiv.className = "buttonDiv";
+          buttonDiv.appendChild(completeButton);
+          buttonDiv.appendChild(undoButton);
+          buttonDiv.appendChild(editButton);
+          buttonDiv.appendChild(deleteButton);
+
+          taskItem.appendChild(buttonDiv);
+          taskItem.appendChild(dateSpan);
+          taskList.appendChild(taskItem);
+
+          updateProgress();
+        }
+
+        complete(taskItem) {
+          if (!this.completed) {
+            this.completed = true;
+            taskItem.style.backgroundColor = "green";
+            taskItem.style.color = "white";
+            taskItem.style.fontStyle = "italic";
+            updateProgress();
+          }
+        }
+
+        undo(taskItem) {
+          if (this.completed) {
+            this.completed = false;
+            taskItem.style.textDecoration = "none";
+            taskItem.style.backgroundColor = "#f9f9f9";
+            taskItem.style.color = "black";
+            taskItem.style.fontStyle = "normal";
+            updateProgress();
+          }
+        }
+
+        delete(taskItem) {
+          taskItem.remove();
+          updateProgress();
+        }
+
+        edit(taskTextSpan) {
+          const newName = prompt("Edit task name:", this.name);
+          if (!newName || /^[0-9]+$/.test(newName)) {
+            alert("Please enter a valid task.");
             return;
+          }
+          this.name = newName;
+          taskTextSpan.textContent = newName;
         }
-        this.name = newName.trim();
-        taskTextSpan.textContent = this.name;
-        saveToLocalStorage();
-    }
-}
+      }
 
-// حفظ وترتيب المهام في localStorage
-function saveToLocalStorage() {
-    const items = taskList.querySelectorAll('li');
-    const taskArray = [];
-    items.forEach(li => {
-        const spans = li.querySelectorAll('span, .task-time');
-        const taskData = {
-            id: parseInt(li.id),
-            name: spans[0].textContent,
-            completed: li.classList.contains('completed'),
-            createdAt: spans[1].textContent.match(/Created: (.+?)( \| Completed:|$)/)[1],
-            completedAt: spans[1].textContent.includes('Completed:') ? spans[1].textContent.match(/Completed: (.+)/)[1] : null
-        };
-        taskArray.push(taskData);
-    });
-    localStorage.setItem('taskArray', JSON.stringify(taskArray));
-}
+      function updateProgress() {
+        const tasks = document.querySelectorAll("#taskList li");
+        const totalTasks = tasks.length;
+        const completedTasks = Array.from(tasks).filter((li) =>
+          li.style.backgroundColor.includes("green")
+        ).length;
 
-// تحديث شريط النسبة
-function updateProgress() {
-    const taskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
-    if (taskArray.length === 0) {
-        progressBar.style.width = '0%';
-        progressBar.textContent = '0%';
-        progressBarBackground.setAttribute('aria-valuenow', 0);
-        return;
-    }
-    const completedCount = taskArray.filter(t => t.completed).length;
-    const percent = Math.round((completedCount / taskArray.length) * 100);
-    progressBar.style.width = percent + '%';
-    progressBar.textContent = percent + '%';
-    progressBarBackground.setAttribute('aria-valuenow', percent);
-}
+        const percent = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) *100);
 
-// تحميل المهام عند الصفحة
-window.addEventListener('load', () => {
-    const taskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
-    taskArray.forEach(t => {
-        const task = new Task(t.name, t.id, t.completed, t.createdAt, t.completedAt);
-        task.createTask();
-    });
-    updateProgress();
-});
+        progressBar.value = percent;
+        progressLabel.textContent = `${percent}% Completed`;
+      }
 
-// إضافة مهمة جديدة
-addTaskButton.addEventListener('click', () => {
-    const text = taskInput.value.trim();
-    if (!text || /^[0-9]+$/.test(text)) {
-        alert('Please enter a valid task.');
-        return;
-    }
-    const task = new Task(text);
-    task.createTask();
-    taskInput.value = '';
-    saveToLocalStorage();
-});
+      addTaskButton.addEventListener("click", () => {
+        const taskText = taskInput.value.trim();
+        if (!taskText || /^[0-9]+$/.test(taskText)) {
+          alert("Please enter a valid task.");
+          return;
+        }
 
-// دعم إضافة المهمة بالضغط على Enter
-taskInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        addTaskButton.click();
-    }
-});
-
-// أزرار الفلتر مع تفعيل الزر المحدد بصرياً
-allBtn.addEventListener('click', () => filterTasks('all'));
-activeBtn.addEventListener('click', () => filterTasks('active'));
-completedBtn.addEventListener('click', () => filterTasks('completed'));
-
-function filterTasks(type) {
-    const items = taskList.querySelectorAll('li');
-    items.forEach(li => {
-        const taskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
-        const taskData = taskArray.find(t => t.id == li.id);
-        if (!taskData) return;
-        if (type === 'all') li.style.display = 'flex';
-        else if (type === 'active') li.style.display = taskData.completed ? 'none' : 'flex';
-        else if (type === 'completed') li.style.display = taskData.completed ? 'flex' : 'none';
-    });
-    // تحديث حالة الأزرار
-    [allBtn, activeBtn, completedBtn].forEach(btn => btn.classList.remove('active'));
-    if (type === 'all') allBtn.classList.add('active');
-    else if (type === 'active') activeBtn.classList.add('active');
-    else if (type === 'completed') completedBtn.classList.add('active');
-}
+        const newTask = new Task(taskText);
+        newTask.createTask();
+        taskInput.value = "";
+      });
+    </script>
+  </body>
+</html>
